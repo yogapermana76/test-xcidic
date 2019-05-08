@@ -1,10 +1,10 @@
 const router = require('express').Router()
-const taskController = require('../controllers/taskController')
+const TaskController = require('../controllers/taskController')
 
-router.post('/', taskController.addTask)
-router.get('/', taskController.findAllTask)
-router.get('/:id', taskController.findOneTask)
-router.put('/:id', taskController.updateTask)
-router.delete('/:id', taskController.deleteTask)
+router.post('/', TaskController.addTask)
+router.get('/', TaskController.findAllTask)
+router.get('/:id', TaskController.findOneTask)
+router.put('/:id', TaskController.updateTask)
+router.delete('/:id', TaskController.deleteTask)
 
 module.exports = router
