@@ -4,8 +4,9 @@ const Schema = mongoose.Schema
 const taskSchema = new Schema({
   title: String,
   description: String,
+  status: Boolean,
   date: Date,
-  user_id: { 
+  userId: { 
     type: Schema.Types.ObjectId,
     ref: 'User'
   }

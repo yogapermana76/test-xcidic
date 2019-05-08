@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="loginModal"
+    id="taskModal"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalLabel"
@@ -10,20 +10,20 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Login</h5>
+          <h5 class="modal-title">Add Task</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="login">
+          <form @submit.prevent="addTask">
             <div class="form-group">
-              <label for="email" class="col-form-label">Email:</label>
-              <input type="text" class="form-control" v-model="email" placeholder="Email">
+              <label for="title" class="col-form-label">Title:</label>
+              <input type="text" class="form-control" v-model="title" placeholder="Title">
             </div>
             <div class="form-group">
-              <label for="Password" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" v-model="password" placeholder="Password">
+              <label for="description" class="col-form-label">Description:</label>
+              <textarea class="form-control" v-model="description" placeholder="Description"></textarea>
             </div>
             <div class="modal-footer">
               <button
@@ -36,7 +36,7 @@
                 type="submit"
                 class="btn text-light shadow"
                 style="background-color: #DD1C97"
-              >Login</button>
+              >Add Task</button>
             </div>
           </form>
         </div>
@@ -46,26 +46,26 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
     return {
-      email: "",
-      password: ""
+      title: "",
+      description: ""
     };
   },
   methods: {
-    ...mapActions(["loginAction"]),
-    login() {
-      this.loginAction({
-        email: this.email,
-        password: this.password
+    ...mapActions(["addTaskAction"]),
+    addTask() {
+      this.addTaskAction({
+        title: this.title,
+        description: this.description
       });
 
-      this.email = "";
-      this.password = "";
-      $("#loginModal").modal("toggle");
+      this.title = "";
+      this.description = "";
+      $("#taskModal").modal("toggle");
     }
   }
 };

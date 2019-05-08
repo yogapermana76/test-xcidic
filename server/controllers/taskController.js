@@ -18,7 +18,9 @@ class TaskController {
   }
 
   static findAllTask(req, res) {
-    Task.find({})
+    Task.find({
+      userId: req.params.userId
+    })
     .then(tasks => {
       res.status(200).json(tasks)
     })

@@ -9,8 +9,14 @@
           </h4>
         </div>
         <div class="col-md-5">
-
-        </div>
+          <button
+            class="btn btn-sm text-light shadow"
+            style="background-color: #1AC4DC"
+            data-toggle="modal"
+            data-target="#taskModal"
+            v-if="isLogin && role == 'employee'"
+          >Add Task</button>
+          </div>
         <div class="col-md-5">
           <div class="float-right">
               <button v-if="!isLogin" class="btn border btn-sm mr-2" data-toggle="modal" data-target="#registerModal">
@@ -32,6 +38,10 @@
       </div>
     </div>
 
+    <!-- task modal -->
+    <TaskModal></TaskModal>
+    <!-- end of task modal -->
+
     <!-- login modal -->
     <LoginModal></LoginModal>
     <!-- end of login modal -->
@@ -45,26 +55,24 @@
 <script>
 import RegisterModal from "@/components/RegisterModal.vue";
 import LoginModal from "@/components/LoginModal.vue";
+import TaskModal from "@/components/TaskModal.vue";
 import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "navbar",
   components: {
     RegisterModal,
-    LoginModal
+    LoginModal,
+    TaskModal
   },
   computed: {
-    ...mapState([
-      'isLogin'
-    ]),
-    ...mapGetters([
-      'getName'
-    ])
+    ...mapState(["isLogin", "role"]),
+    ...mapGetters(["getName"])
   },
   methods: {
     logout() {
-      localStorage.clear()
-      this.$store.commit('successLogout')
+      localStorage.clear();
+      this.$store.commit("successLogout");
     }
   }
 }

@@ -9,7 +9,13 @@ export default new Vuex.Store({
     name: '',
     email: '',
     password: '',
-    isLogin: false
+    isLogin: false,
+    role: "",
+    title: "",
+    description: "",
+    date: "",
+    status: "",
+    tasks: []
   },
   getters: {
     getName(state) {
@@ -25,9 +31,16 @@ export default new Vuex.Store({
     successLogin(state, data) {
       state.isLogin = true
       state.name = localStorage.getItem('name')
+      state.role = localStorage.getItem('role')
     },
     successLogout(state, data) {
       state.isLogin = false
+    },
+    successAddTask(state, data) {
+      state.tasks.push(data)
+    },
+    findAllTask(state, data) {
+      state.tasks = data
     }
   },
   actions: {
@@ -52,12 +65,38 @@ export default new Vuex.Store({
           password: data.password
         })
         .then(({ data }) => {
-          const { token, email, name, id } = data
+          const { token, email, name, id, role } = data
           localStorage.setItem('token', token)
           localStorage.setItem('email', email)
           localStorage.setItem('name', name)
           localStorage.setItem('id', id)
+          localStorage.setItem('role', role)
           context.commit('successLogin')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    addTaskAction(context, data) {
+      backend
+        .post('/tasks', {
+          title: data.title,
+          description: data.description,
+          userId: localStorage.getItem('id')
+        })
+        .then(({ data }) => {
+          console.log(data)
+          context.dispatch('findAllTaskAction')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    findAllTaskAction(context, data) {
+      backend
+        .get(`/tasks/${localStorage.getItem('id')}`)
+        .then(({ data }) => {
+          context.commit('findAllTask', data)
         })
         .catch(err => {
           console.log(err)
