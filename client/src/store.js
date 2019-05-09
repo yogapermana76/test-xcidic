@@ -15,7 +15,9 @@ export default new Vuex.Store({
     description: "",
     date: "",
     status: "",
-    tasks: []
+    tasks: [],
+    task: {},
+    allTask: []
   },
   getters: {
     getName(state) {
@@ -36,11 +38,14 @@ export default new Vuex.Store({
     successLogout(state, data) {
       state.isLogin = false
     },
-    successAddTask(state, data) {
-      state.tasks.push(data)
-    },
     findAllTask(state, data) {
       state.tasks = data
+    },
+    findOneTask(state, data) {
+      state.task = data
+    },
+    getAllTask(state, data) {
+      state.allTask = data
     }
   },
   actions: {
@@ -72,6 +77,8 @@ export default new Vuex.Store({
           localStorage.setItem('id', id)
           localStorage.setItem('role', role)
           context.commit('successLogin')
+          context.dispatch('findAllTaskAction')
+          // context.dispatch('getAllTaskAction')
         })
         .catch(err => {
           console.log(err)
@@ -85,7 +92,6 @@ export default new Vuex.Store({
           userId: localStorage.getItem('id')
         })
         .then(({ data }) => {
-          console.log(data)
           context.dispatch('findAllTaskAction')
         })
         .catch(err => {
@@ -112,16 +118,36 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-    }
-  },
-  updateTaskAction(context, id) {
-    backend
-      .put(`/tasks/${id}`)
-      .then(() => {
-        console.log('success updated task')
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    },
+    getAllTaskAction(context) {
+      backend
+        .get('/tasks')
+        .then(({ data }) => {
+          context.commit('getAllTask', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // findOneTaskAction(context, id) {
+    //   backend
+    //     .get(`/tasks/${id}`)
+    //     .then(({ data }) => {
+    //       context.commit('findOneTask', data)
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
+    // updateTaskAction(context, id) {
+    //   backend
+    //     .put(`/tasks/${id}`)
+    //     .then(() => {
+    //       console.log('success updated task')
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
   }
 })

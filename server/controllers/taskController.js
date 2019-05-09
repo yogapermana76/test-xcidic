@@ -17,10 +17,21 @@ class TaskController {
     })
   }
 
+  static getAllTask(req, res) {
+    Task.find({})
+    .then(allTask => {
+      res.status(200).json(allTask)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+  }
+
   static findAllTask(req, res) {
     Task.find({
       userId: req.params.userId
     })
+    .populate('userId')
     .then(tasks => {
       res.status(200).json(tasks)
     })
@@ -50,7 +61,7 @@ class TaskController {
   }
 
   static deleteTask(req, res) {
-    Task.findOneAndDelete(req.params.id)
+    Task.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(200).json({ message: 'task success deleted' })
     })

@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
               <label for="Password" class="col-form-label">Password:</label>
-              <input type="password" class="form-control" v-model="password" placeholder="Password">
+              <input type="password" class="form-control" autocomplete="password" v-model="password" placeholder="Password">
             </div>
             <div class="modal-footer">
               <button

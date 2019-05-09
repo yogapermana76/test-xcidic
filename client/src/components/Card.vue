@@ -1,30 +1,52 @@
 <template>
-  <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-    <div class="card-header">{{ task.title }} <span style="cursor: pointer" @click="deleteTask(task.id)" class="float-right"><i class="fas fa-trash-alt"></i></span></div>
-    <div class="card-body">
-      <p
-        class="card-text"
-      >{{ task.description }}</p>
-      <p>{{ task.date.slice(0, 10) }}</p>
+  <div class="card mb-3" style="max-width: 18rem;">
+    <div class="card-header">
+      {{ detail.title }}
+      <span
+        style="cursor: pointer"
+        @click="deleteTask(detail._id)"
+        class="float-right"
+      >
+        <i class="fas fa-trash-alt"></i>
+      </span>
     </div>
+    <div class="card-body">
+      <p class="card-text">{{ detail.description }}</p>
+      <p>{{ detail.date.slice(0, 10) }}</p>
+      <button
+        class="btn btn-sm btn-outline-info float-right"
+        data-toggle="modal"
+        data-target="#updateTaskModal"
+      >Edit</button>
+    </div>
+    <UpdateTaskModal :id="detail._id" :task="task"></UpdateTaskModal>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import UpdateTaskModal from "@/components/UpdateTaskModal.vue";
+
 export default {
-  props: ["task"],
+  props: ["detail"],
+  components: {
+    UpdateTaskModal
+  },
   computed: {
-    ...mapState([""])
+    ...mapState(["task"])
   },
   methods: {
-    ...mapActions(["deleteTaskAction", "updateTaskAction"]),
+    ...mapActions(["deleteTaskAction", "findOneTaskAction", "updateTaskAction"]),
     deleteTask(id) {
-      this.deleteTaskAction(id)
+      console.log(id, '=== dari card')
+      this.deleteTaskAction(id);
     },
-    updateTask(id) {
-
-    }
+    // findOneTask(id) {
+    //   this.findOneTaskAction(id)
+    // }
+    // updateTask(id) {
+    //   this.updateTaskAction(id);
+    // }
   }
 };
 </script>

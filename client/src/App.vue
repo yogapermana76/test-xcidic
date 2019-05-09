@@ -15,16 +15,14 @@ export default {
     Navbar
   },
   created() {
-    this.findAllTaskAction()
     if (localStorage.getItem("token")) {
       this.$store.commit("successLogin");
+      this.findAllTaskAction()
+  this.getAllTaskAction()
     }
   },
-  computed: {
-    ...mapState(["tasks"])
-  },
   methods: {
-    ...mapActions(["findAllTaskAction"])
+    ...mapActions(["findAllTaskAction", "getAllTaskAction"])
   },
 }
 </script>
