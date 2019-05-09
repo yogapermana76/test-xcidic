@@ -16,9 +16,9 @@
           </button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="updateTask">
+          <form @submit.prevent="updateTask(task._id)">
             <div class="form-group">
-              <label for="title" class="col-form-label">Title:</label>
+              <label for="title" class="col-form-label">Title: </label>
               <input type="text" class="form-control" v-model="title" placeholder="Title">
             </div>
             <div class="form-group">
@@ -49,12 +49,15 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  props: ['id', 'task'],
+  props: ['id'],
   data() {
     return {
       title: "",
       description: ""
     };
+  },
+  computed: {
+    ...mapState(["task"])
   },
   methods: {
     ...mapActions(["updateTaskAction"]),
@@ -67,7 +70,13 @@ export default {
 
       this.title = "";
       this.description = "";
-      $("#taskModal").modal("toggle");
+      $("#updateTaskModal").modal('toggle')
+    }
+  },
+  watch: {
+    task() {
+      this.title = this.task.title
+      this.description = this.task.description
     }
   }
 };

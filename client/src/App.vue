@@ -18,7 +18,7 @@ export default {
     if (localStorage.getItem("token")) {
       this.$store.commit("successLogin");
       this.findAllTaskAction()
-  this.getAllTaskAction()
+      this.getAllTaskAction()
     }
   },
   methods: {

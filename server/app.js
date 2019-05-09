@@ -6,12 +6,13 @@ const port = 3000
 const cors = require('cors')
 const routes = require('./routes')
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/test-xcidic', { useNewUrlParser: true })
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connect(`mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@cluster0-y1tro.mongodb.net/test-xcidic?retryWrites=true`, { useNewUrlParser: true });
+
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
-  console.log(`database connected`)
+  console.log('database connected')
 });
 
 app.use(cors())

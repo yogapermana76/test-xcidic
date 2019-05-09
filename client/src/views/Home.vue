@@ -7,24 +7,29 @@
     </div>
 
     <div class="row" v-if="isLogin && role == 'manager'">
-      {{ allTask }}
-      <table class="table">
+      <h3 class="mb-4">List All Activity of Employees</h3>
+      <table class="table shadow">
         <thead>
           <tr>
             <th>No</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date</th>
             <th>Employee</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Bakso</td>
-            <td><button class="btn btn-warning text-light">View</button></td>
+          <tr v-for="(task, index) in allTask" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.date }}</td>
+            <td>{{ task.userId.name }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 

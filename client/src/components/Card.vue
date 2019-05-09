@@ -14,6 +14,7 @@
       <p class="card-text">{{ detail.description }}</p>
       <p>{{ detail.date.slice(0, 10) }}</p>
       <button
+        @click="findOneTask(detail._id)"
         class="btn btn-sm btn-outline-info float-right"
         data-toggle="modal"
         data-target="#updateTaskModal"
@@ -38,12 +39,11 @@ export default {
   methods: {
     ...mapActions(["deleteTaskAction", "findOneTaskAction", "updateTaskAction"]),
     deleteTask(id) {
-      console.log(id, '=== dari card')
-      this.deleteTaskAction(id);
+      this.deleteTaskAction(id)
     },
-    // findOneTask(id) {
-    //   this.findOneTaskAction(id)
-    // }
+    findOneTask(id) {
+      this.findOneTaskAction(id)
+    },
     // updateTask(id) {
     //   this.updateTaskAction(id);
     // }

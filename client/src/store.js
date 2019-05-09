@@ -17,7 +17,7 @@ export default new Vuex.Store({
     status: "",
     tasks: [],
     task: {},
-    allTask: []
+    allTask: [],
   },
   getters: {
     getName(state) {
@@ -78,7 +78,7 @@ export default new Vuex.Store({
           localStorage.setItem('role', role)
           context.commit('successLogin')
           context.dispatch('findAllTaskAction')
-          // context.dispatch('getAllTaskAction')
+          context.dispatch('getAllTaskAction')
         })
         .catch(err => {
           console.log(err)
@@ -90,6 +90,10 @@ export default new Vuex.Store({
           title: data.title,
           description: data.description,
           userId: localStorage.getItem('id')
+        }, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
         })
         .then(({ data }) => {
           context.dispatch('findAllTaskAction')
@@ -100,7 +104,11 @@ export default new Vuex.Store({
     },
     findAllTaskAction(context, data) {
       backend
-        .get(`/tasks/${localStorage.getItem('id')}`)
+        .get(`/tasks/${localStorage.getItem('id')}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
         .then(({ data }) => {
           context.commit('findAllTask', data)
         })
@@ -110,7 +118,11 @@ export default new Vuex.Store({
     },
     deleteTaskAction(context, id) {
       backend
-        .delete(`/tasks/${id}`)
+        .delete(`/tasks/${id}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
         .then(() => {
           console.log('success deleted task')
           context.dispatch('findAllTaskAction')
@@ -121,7 +133,11 @@ export default new Vuex.Store({
     },
     getAllTaskAction(context) {
       backend
-        .get('/tasks')
+        .get('/tasks', {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
         .then(({ data }) => {
           context.commit('getAllTask', data)
         })
@@ -129,25 +145,37 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    // findOneTaskAction(context, id) {
-    //   backend
-    //     .get(`/tasks/${id}`)
-    //     .then(({ data }) => {
-    //       context.commit('findOneTask', data)
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // },
-    // updateTaskAction(context, id) {
-    //   backend
-    //     .put(`/tasks/${id}`)
-    //     .then(() => {
-    //       console.log('success updated task')
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // }
+    findOneTaskAction(context, id) {
+      backend
+        .get(`/tasks/edit/${id}`, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(({ data }) => {
+          context.commit('findOneTask', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    updateTaskAction(context, data) {
+      backend
+        .put(`/tasks/${data.id}`, {
+          title: data.title,
+          description: data.description
+        }, {
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+        .then(() => {
+          console.log('success updated task')
+          context.dispatch('findAllTaskAction')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 })

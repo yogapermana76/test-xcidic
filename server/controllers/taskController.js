@@ -19,6 +19,7 @@ class TaskController {
 
   static getAllTask(req, res) {
     Task.find({})
+    .populate('userId')
     .then(allTask => {
       res.status(200).json(allTask)
     })
@@ -51,7 +52,11 @@ class TaskController {
   }
 
   static updateTask(req, res) {
-    Task.findByIdAndUpdate(req.params.id, ...req.body)
+    Task.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      description: req.body.description,
+      date: new Date()
+    })
     .then(() => {
       res.status(200).json({ message: 'task success updated' })
     })
