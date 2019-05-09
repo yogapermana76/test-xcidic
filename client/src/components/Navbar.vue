@@ -15,24 +15,38 @@
             data-toggle="modal"
             data-target="#taskModal"
             v-if="isLogin && role == 'employee'"
-          >Add Task</button>
-          </div>
+          >
+            Add Task
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
         <div class="col-md-5">
           <div class="float-right">
-              <button v-if="!isLogin" class="btn border btn-sm mr-2" data-toggle="modal" data-target="#registerModal">
-                <i class="fas fa-user-plus"></i> Register
+            <button
+              v-if="!isLogin"
+              class="btn border btn-sm mr-2"
+              data-toggle="modal"
+              data-target="#registerModal"
+            >
+              <i class="fas fa-user-plus"></i> Register
+            </button>
+            <button
+              v-if="!isLogin"
+              class="btn btn-sm border"
+              data-toggle="modal"
+              data-target="#loginModal"
+            >
+              <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <span
+              v-if="isLogin"
+              style="font-weight: bold; color: #9B9998; border-right: 1px solid #C8C2C0; padding-right: 10px; margin-right: 10px"
+            >Hello, {{ getName }}</span>
+            <span>
+              <button v-if="isLogin" @click="logout" class="btn btn-sm border">
+                <i class="fas fa-sign-in-alt"></i> Logout
               </button>
-              <button v-if="!isLogin" class="btn btn-sm border" data-toggle="modal" data-target="#loginModal">
-                <i class="fas fa-sign-in-alt"></i> Login
-              </button>
-              <span v-if="isLogin" style="margin-right: 5px; font-weight: bold; color: #9B9998; border-right: 1px solid #C8C2C0; padding-right: 5px; margin-right: 10px">
-                Hello, {{ getName }}
-              </span>
-              <span>
-                <button v-if="isLogin" @click="logout" class="btn btn-sm border">
-                  <i class="fas fa-sign-in-alt"></i> Logout
-                </button>
-              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -75,5 +89,5 @@ export default {
       this.$store.commit("successLogout");
     }
   }
-}
+};
 </script>

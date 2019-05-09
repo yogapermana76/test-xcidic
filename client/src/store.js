@@ -101,6 +101,27 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    deleteTaskAction(context, id) {
+      backend
+        .delete(`/tasks/${id}`)
+        .then(() => {
+          console.log('success deleted task')
+          context.dispatch('findAllTaskAction')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
+  },
+  updateTaskAction(context, id) {
+    backend
+      .put(`/tasks/${id}`)
+      .then(() => {
+        console.log('success updated task')
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 })

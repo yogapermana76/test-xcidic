@@ -66,6 +66,7 @@ export default {
       this.email = "";
       this.password = "";
       $("#loginModal").modal("toggle");
+      this.$router.push('/')
     }
   }
 };

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Navbar></Navbar>
-    
-    <router-view/>
+
+    <router-view style="margin-top: 100px"></router-view>
   </div>
 </template>
 
