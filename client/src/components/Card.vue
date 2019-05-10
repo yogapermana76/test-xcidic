@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
       <p class="card-text">{{ detailTask.description }}</p>
-      <p>{{ detailTask.date.slice(0, 10) }}</p>
+      <p>{{ detailTask.date.slice(0, 10).split('-').reverse().join('/') }}</p>
       <button
         @click="findOneTask(detailTask._id)"
         class="btn btn-sm btn-outline-info float-right"

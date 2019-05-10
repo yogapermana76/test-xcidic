@@ -31,7 +31,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ task.title }}</td>
             <td>{{ task.description }}</td>
-            <td>{{ task.date }}</td>
+            <td>{{ task.date.slice(0, 10).split('-').reverse().join('/') + ' ' + task.date.slice(11, 19) }}</td>
             <td>{{ task.userId.name }}</td>
           </tr>
         </tbody>
