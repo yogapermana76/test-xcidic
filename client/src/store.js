@@ -83,6 +83,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+          swal("email / password is wrong!", "You clicked the button!", "warning");
         })
     },
     addTaskAction(context, data) {
