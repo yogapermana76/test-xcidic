@@ -14,7 +14,6 @@ export default new Vuex.Store({
     title: "",
     description: "",
     date: "",
-    status: "",
     tasks: [],
     task: {},
     allTask: [],
