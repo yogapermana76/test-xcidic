@@ -2,8 +2,8 @@
 ## Usage
 ```javascript
 $ npm install
-$ nodemon app.js for server
-$ npm run serve for client
+$ node app.js
+$ npm run serve
 ```
 Access server via `http://localhost:3000`<br>
 Access client via `http://localhost:8080`
