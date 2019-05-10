@@ -58,6 +58,7 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           console.log(data)
+          swal("Success Register!", "You clicked the button!", "success");
         })
         .catch(err => {
           console.log(err)
@@ -70,6 +71,7 @@ export default new Vuex.Store({
           password: data.password
         })
         .then(({ data }) => {
+          swal("Success Login!", "You clicked the button!", "success");
           const { token, email, name, id, role } = data
           localStorage.setItem('token', token)
           localStorage.setItem('email', email)
@@ -96,6 +98,7 @@ export default new Vuex.Store({
           }
         })
         .then(({ data }) => {
+          swal("Success Add Task!", "You clicked the button!", "success");
           context.dispatch('findAllTaskAction')
         })
         .catch(err => {
@@ -117,29 +120,50 @@ export default new Vuex.Store({
         })
     },
     deleteTaskAction(context, id) {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          backend
+            .delete(`/tasks/${id}`, {
+              headers: {
+                token: localStorage.getItem('token')
+              }
+            })
+            .then(() => {
+              console.log('success deleted task')
+              swal("Poof! Your task has been deleted!", {
+                icon: "success",
+              })
+              context.dispatch('findAllTaskAction')
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        } else {
+          swal("Your task is safe!");
+        }
+      })
+    },
+    updateTaskAction(context, data) {
       backend
-        .delete(`/tasks/${id}`, {
+        .put(`/tasks/${data.id}`, {
+          title: data.title,
+          description: data.description
+        }, {
           headers: {
             token: localStorage.getItem('token')
           }
         })
         .then(() => {
-          console.log('success deleted task')
+          console.log('success updated task')
+          swal("Success Update Task!", "You clicked the button!", "success");
           context.dispatch('findAllTaskAction')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    getAllTaskAction(context) {
-      backend
-        .get('/tasks', {
-          headers: {
-            token: localStorage.getItem('token')
-          }
-        })
-        .then(({ data }) => {
-          context.commit('getAllTask', data)
         })
         .catch(err => {
           console.log(err)
@@ -159,19 +183,15 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    updateTaskAction(context, data) {
+    getAllTaskAction(context) {
       backend
-        .put(`/tasks/${data.id}`, {
-          title: data.title,
-          description: data.description
-        }, {
+        .get('/tasks', {
           headers: {
             token: localStorage.getItem('token')
           }
         })
-        .then(() => {
-          console.log('success updated task')
-          context.dispatch('findAllTaskAction')
+        .then(({ data }) => {
+          context.commit('getAllTask', data)
         })
         .catch(err => {
           console.log(err)

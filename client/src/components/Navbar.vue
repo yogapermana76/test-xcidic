@@ -85,9 +85,21 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$store.commit("successLogout");
+      swal({
+        title: "Are you sure logout?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          localStorage.clear();
+          this.$store.commit("successLogout");
+          swal("Poof! You has been logout!", {
+            icon: "success"
+          });
+        }
+      });
     }
   }
-};
+}
 </script>

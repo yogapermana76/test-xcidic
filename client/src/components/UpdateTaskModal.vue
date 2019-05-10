@@ -49,7 +49,6 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  props: ['id'],
   data() {
     return {
       title: "",

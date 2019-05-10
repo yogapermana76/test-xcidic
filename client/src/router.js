@@ -13,12 +13,12 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
-      children: [
-        {
-          path: 'edit/:id',
-          component: UpdateTaskModal
-        }
-      ]
+      // children: [
+      //   {
+      //     path: 'edit/:id',
+      //     component: UpdateTaskModal
+      //   }
+      // ]
     }
   ]
 })

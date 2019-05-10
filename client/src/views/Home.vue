@@ -1,8 +1,16 @@
 <template>
   <div class="home container">
+    <div v-if="!isLogin">
+      <center>
+        <div data-aos="zoom-in">
+          <h1>Hello World</h1>
+        </div>
+      </center>
+    </div>
+
     <div class="row" v-if="isLogin && role == 'employee'">
       <div class="col-md-3" v-for="(task, index) in tasks" :key="index">
-        <Card :detail="task" class="shadow-lg"></Card>
+        <Card :detailTask="task" class="shadow-lg"></Card>
       </div>
     </div>
 
@@ -29,7 +37,7 @@
         </tbody>
       </table>
     </div>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -45,5 +53,5 @@ export default {
   computed: {
     ...mapState(["isLogin", "role", "tasks", "allTask"])
   }
-}
+};
 </script>
